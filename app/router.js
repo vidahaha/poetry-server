@@ -11,8 +11,21 @@ module.exports = app => {
   router.post('/Admin/Login', controller.admin.login);    
   router.post('/Admin/Add', controller.admin.add);
   router.post('/Poetry/Library', controller.poetry.library);
+  router.post('/Poetry/Grade', controller.poetry.grade);  
+  router.get('/Global/QuestionNum', controller.global.questionNum); 
+  router.get('/Global/Index', controller.global.index);   
+  router.get('/StudentList', controller.home.studentList);        
+  router.get('/AdminList', controller.home.adminList); 
+  router.get('/QuestionList', controller.home.questionList); 
+  router.post('/Global/QuestionNum', controller.global.updateQuestionNum);
+  router.post('/Poetry/Add', controller.poetry.add);
+  router.post('/Poetry/Delete', controller.poetry.delete);              
+  
   
   //test
   router.get('/Test/5', controller.test.test_5);
+  router.get('/Test/6', controller.test.test_6);  
+  router.get('/Test/12', controller.test.test_12);
+  router.get('/Test/13', controller.test.test_13);      
   
 };

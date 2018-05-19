@@ -10,6 +10,7 @@ class LibraryService extends Service {
             quesLength = [],
             result = {},
             data = {},
+            libraryId = [],
             self = this,
             res = {}; //最终response
 
@@ -25,26 +26,26 @@ class LibraryService extends Service {
 
         let randomSelecet = ( data, num, limit ) => {
             let randomRes = [];
+            libraryId.push([]);
             for ( let i = 0; i < num; i++ ) {
                 let randomIndex = Math.floor(Math.random() * (limit -1 - i) );
-                console.log(randomIndex)
                 randomRes.push( data[randomIndex] );
+                libraryId[libraryId.length - 1].push( data[randomIndex].id );
                 data.splice(randomIndex,1);
             }
-            console.log( randomRes )
-            return randomRes;
+            return randomRes;           
         }
 
         for (let val of quesLength) {      
             if ( val < num[index] ) {
-                return res =  {
+                res =  {
                     status: false,
                     msg: `题库中${tableName[index]}只有${val}题`
                 }
             } else {
                 result = await self.app.mysql.select(table[index]);
                 if (result === null ) {
-                    return res =  {
+                    res =  {
                         status: false,
                         msg: '服务器错误'
                     }
@@ -56,7 +57,7 @@ class LibraryService extends Service {
                     });
                     data[tableNameEn[index]] = randomSelecet(result, num[index], quesLength[index]);
                     if ( index === quesLength.length - 1 ) {
-                        return res = {
+                        res = {
                             status: true,
                             msg: '成功读取题库',
                             data
@@ -66,7 +67,7 @@ class LibraryService extends Service {
             }
             index++;
         }
-
+        self.ctx.session.libraryId = libraryId;
         return res; 
   	}
 }

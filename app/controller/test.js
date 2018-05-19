@@ -18,6 +18,56 @@ class TestController extends Controller {
             data,
             dataType: 'json',
             contentType: 'json',
+        });
+        this.ctx.body = result;
+    }
+
+    async test_6() {
+        let data = {
+            id: '12345678',
+            answer: [
+              [1,2,3,4,1,4,2,1,4,1], // 选择题 (1为A,4为D)
+              [0,1,0,1,0], // 判断题 （0为错，1为对）
+              [2,3,4,1,3] //欣赏题
+            ]
+        }
+
+        const result = await this.ctx.curl(`${this.root}/Poetry/Grade`, {
+            method: 'post',
+            data,
+            dataType: 'json',
+            contentType: 'json',
+          });
+        this.ctx.body = result;
+    }
+
+    async test_12() {
+        let data = {
+            questionNum: [10,1,9]
+        }
+        const result = await this.ctx.curl(`${this.root}/Global/QuestionNum`, {
+            method: 'post',
+            data,
+            dataType: 'json',
+            contentType: 'json',
+          });
+        this.ctx.body = result;
+    }
+
+    async test_13() {
+        let data = {
+            type: 0,
+            question: '1+1=?',
+            option: ['2', '3', '4', '5'],
+            answer: 1,
+            analysis: '简单的数学运算',
+            image: 'C:/Users/vidahaha/Desktop/葫芦丝/简谱1.jpg'
+          }
+        const result = await this.ctx.curl(`${this.root}/Poetry/Add`, {
+            method: 'post',
+            data,
+            dataType: 'json',
+            contentType: 'json',
           });
         this.ctx.body = result;
     }

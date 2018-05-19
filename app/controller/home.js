@@ -28,6 +28,40 @@ class HomeController extends Controller {
             msg: res.msg
         }
     }
+
+    async studentList() {
+        const studentList = this.ctx.service.home.studentList;
+        const res = await studentList.index();
+
+        this.ctx.body = {
+            status: res.status,
+            msg: res.msg,
+            data: res.data
+        }
+    }
+
+    async adminList() {
+        const adminList = this.ctx.service.home.adminList;
+        const res = await adminList.index();
+
+        this.ctx.body = {
+            status: res.status,
+            msg: res.msg,
+            data: res.data
+        }
+    }
+
+    async questionList() {
+        const questionList = this.ctx.service.home.questionList;
+        const res = await questionList.index();
+
+        this.ctx.body = {
+            status: res.status,
+            msg: res.msg,
+            data: res.data
+        }
+    }
+
 }
 
 module.exports = HomeController;
