@@ -37,7 +37,11 @@ class LibraryService extends Service {
                         msg: '服务器错误'
                     }
                 } else {
-                    if( result.option )result.option = result.option.split('|');
+                    result.forEach(val => {
+                        if( val.option ) {
+                            val.option = val.option.split('|');
+                        }
+                    });
                     data[tableNameEn[index]] = result;
                     if( index === quesLength.length - 1 ) {
                         return res = {
