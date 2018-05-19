@@ -23,6 +23,18 @@ class LibraryService extends Service {
 
         let index = 0;    
 
+        let randomSelecet = ( data, num, limit ) => {
+            let randomRes = [];
+            for ( let i = 0; i < num; i++ ) {
+                let randomIndex = Math.floor(Math.random() * (limit -1 - i) );
+                console.log(randomIndex)
+                randomRes.push( data[randomIndex] );
+                data.splice(randomIndex,1);
+            }
+            console.log( randomRes )
+            return randomRes;
+        }
+
         for (let val of quesLength) {      
             if ( val < num[index] ) {
                 return res =  {
@@ -38,12 +50,12 @@ class LibraryService extends Service {
                     }
                 } else {
                     result.forEach(val => {
-                        if( val.option ) {
+                        if ( val.option ) {
                             val.option = val.option.split('|');
                         }
                     });
-                    data[tableNameEn[index]] = result;
-                    if( index === quesLength.length - 1 ) {
+                    data[tableNameEn[index]] = randomSelecet(result, num[index], quesLength[index]);
+                    if ( index === quesLength.length - 1 ) {
                         return res = {
                             status: true,
                             msg: '成功读取题库',
@@ -54,6 +66,7 @@ class LibraryService extends Service {
             }
             index++;
         }
+
         return res; 
   	}
 }
