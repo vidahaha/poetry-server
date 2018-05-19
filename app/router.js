@@ -19,7 +19,12 @@ module.exports = app => {
   router.get('/QuestionList', controller.home.questionList); 
   router.post('/Global/QuestionNum', controller.global.updateQuestionNum);
   router.post('/Poetry/Add', controller.poetry.add);
-  router.post('/Poetry/Delete', controller.poetry.delete);              
+  router.post('/Poetry/Delete', controller.poetry.delete);
+  router.post('/Poetry/Update', controller.poetry.update);  
+  router.post('/Student/Add', controller.home.add);
+  router.post('/Student/Delete', controller.home.delete);    
+  router.post('/Student/Update', controller.home.update);                                                                                                                      
+                                                              
   
   
   //test

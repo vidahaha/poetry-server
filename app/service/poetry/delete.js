@@ -1,4 +1,3 @@
-const fs = require('fs');
 const Service = require('egg').Service;
 
 class DeleteService extends Service {
