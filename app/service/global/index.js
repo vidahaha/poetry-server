@@ -5,7 +5,7 @@ class IndexService extends Service {
 
         let result = await this.app.mysql.get('global');
         
-        let questionNum = result.question_num.split('|');
+        let questionNum = result.question_num;
 		
 		result = await this.app.mysql.select('student');
 

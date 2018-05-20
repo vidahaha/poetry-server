@@ -43,7 +43,7 @@ class TestController extends Controller {
 
     async test_12() {
         let data = {
-            questionNum: [10,1,9]
+            questionNum: 30
         }
         const result = await this.ctx.curl(`${this.root}/Global/QuestionNum`, {
             method: 'post',
@@ -64,6 +64,20 @@ class TestController extends Controller {
             image: 'C:/Users/vidahaha/Desktop/葫芦丝/简谱1.jpg'
           }
         const result = await this.ctx.curl(`${this.root}/Poetry/Add`, {
+            method: 'post',
+            data,
+            dataType: 'json',
+            contentType: 'json',
+          });
+        this.ctx.body = result;
+    }
+
+    async test_18() {
+        let data = {
+            id: '123456788',  //必选
+            class: '2-3'      //可选
+          }
+        const result = await this.ctx.curl(`${this.root}/Student/Update`, {
             method: 'post',
             data,
             dataType: 'json',

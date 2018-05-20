@@ -31,6 +31,7 @@ module.exports = app => {
   router.get('/Test/5', controller.test.test_5);
   router.get('/Test/6', controller.test.test_6);  
   router.get('/Test/12', controller.test.test_12);
-  router.get('/Test/13', controller.test.test_13);      
+  router.get('/Test/13', controller.test.test_13); 
+  router.get('/Test/18', controller.test.test_18);        
   
 };

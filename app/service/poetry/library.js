@@ -51,6 +51,7 @@ class LibraryService extends Service {
                     }
                 } else {
                     result.forEach(val => {
+                        delete val.answer;
                         if ( val.option ) {
                             val.option = val.option.split('|');
                         }

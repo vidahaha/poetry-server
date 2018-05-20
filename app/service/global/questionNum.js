@@ -11,7 +11,7 @@ class QuestionNumService extends Service {
                 msg: '内部错误'
             }
         }  else {
-			let questionNum = result.question_num.split('|');
+			let questionNum = result.question_num;
             return {
 				status: true,
                 msg: '读取成功',				
@@ -22,8 +22,6 @@ class QuestionNumService extends Service {
       
     async update( body ) {
         let {questionNum} = body;
-        questionNum = questionNum.join('|');
-        console.log( questionNum )
         let result = await this.app.mysql.update('global', {
             id: 1,
             question_num: questionNum

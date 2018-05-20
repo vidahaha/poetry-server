@@ -19,4 +19,4 @@ class DeleteService extends Service {
   	}
 }
 
-module.exports = AddService;
+module.exports = DeleteService;

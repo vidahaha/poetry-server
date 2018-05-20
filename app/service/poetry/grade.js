@@ -7,9 +7,12 @@ class GradeService extends Service {
 			answerId = this.ctx.session.libraryId,
 			grade = 0,
 			rightAnswer = [],
+			studentName = '',
+			count = 0,
 			result = {};
+			console.log(this.ctx.session)
+		let score = 100 / answerId.join().split('|').length;
 
-		console.log(this.ctx.session)
 		if ( answerId === null ) {
 			return {
 				status: false,
@@ -19,42 +22,48 @@ class GradeService extends Service {
 			for ( let i = 0; i < answerId.length; i++ ) {
 				rightAnswer.push([]);
 				for ( let j = 0; j < answerId[i].length; j++ ) {
-					currentAnswerId = answerId[i][j];
-					currentAnswer = answer[i][j];
+					let currentAnswerId = answerId[i][j];
+					let currentAnswer = answer[i][j];
 					result = await this.app.mysql.select(table[i], {
 						where: {id: currentAnswerId},
 						columns: ['answer']
 					});
 					rightAnswer[i].push(result.answer);
 					if( currentAnswer === result.answer ) {
-						grade += 5;
+						grade += score;
 					}
 				}
 			}
 
-			result = await this.app.mysql.get('student', {
-				where: {id},
-				columns: ['name']
-			});
+			result = await this.app.mysql.get('student',{id});
 
-			let studentName = result.name;
+			if(result) {
+				studentName = result.name;
+			} else {
+				return {
+					status: false,
+					msg: '无效的学生'
+				}
+			}
 
-			result = await this.app.mysql.get('grade', {
-				where: {id},
-				columns: ['count','desc'],
+			result = await this.app.mysql.select('grade', {
+				where: {studentId: id},
+				columns: ['count'],
+				order: [['count','desc']],
 				limit: 1
 			});
 
-			if ( result ) {
-				let count = result.count + 1;
+			if ( result.length !== 0 ) {
+				count = result.count + 1;
 			} else {
-				let count = 1;
+				count = 1;
 			}
 
 			let time = new Date();
 			time = time.toLocaleDateString();
 
 			result = await this.app.mysql.insert('grade', {
+				name: studentName,
 				studentId: id,
 				grade,
 				count,

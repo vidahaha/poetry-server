@@ -82,6 +82,16 @@ class HomeController extends Controller {
         }
     }
 
+    async update() {
+        const update = this.ctx.service.home.update;
+        const res = await update.index();
+
+        this.ctx.body = {
+            status: res.status,
+            msg: res.msg,
+        }
+    }
+
 }
 
 module.exports = HomeController;
