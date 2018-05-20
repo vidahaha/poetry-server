@@ -4,12 +4,12 @@ class AddService extends Service {
   	async index( body ) {
         let {name, id} = body;
         let _class = body.class;
-        let result = await this.app.mysql.get('student', {name});
+        let result = await this.app.mysql.get('student', {id});
 
     	if( result ) {
             return {
                 status: false,
-                msg: '用户名已存在'
+                msg: '学号已存在'
             }
         } else {
             await this.app.mysql.insert('student', {

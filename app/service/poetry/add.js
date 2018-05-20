@@ -1,35 +1,42 @@
 const fs = require('fs');
+const path = require('path');
 const Service = require('egg').Service;
 
 class AddService extends Service {
   	async index( body ) {
-		let {type, question, option, answer, analysis, image, video} = body,
-			table = ['choice_question', 'judge_question', 'admiring_question'];
-		console.log( image )
+		
+		let	table = ['choice_question', 'judge_question', 'admiring_question'];
 
-		let buffer = new Buffer(base64Data, 'base64');
+		const stream = await this.ctx.getFileStream();
+		
+		let {type, question, option, answer, analysis} = stream.fields;
+
+		let result = {};
 
 		if ( typeof type !== 'number' ) type = parseInt(type);
 
-		type == 2 ? buffer = video : buffer = image;
+		let url = './static/'+path.basename(stream.filename);
+
+		let saveUrl = global.API_HOST + '/static/'+path.basename(stream.filename);
 
 		let time = new Date();
 
-		let url = `${table[type]}_${time.getTime()}`;
-			
-		fs.writeFile(url, buffer, err => {
-			if (err) {
-				console.log( '图片写入失败')
-			}
-		});
+		result = await this.ctx.oss.put(url, stream);
+
+		if ( !result ) {
+			return {
+                status: false,
+                msg: '上传失败'
+            }
+		}
 
 		if (option) {
-			option = option.join('|');
+			option = option.split(',').join('|');
 		}
 
         switch (type) {
 			case 0 : {
-				let result = await this.app.mysql.insert(table[type], {
+				result = await this.app.mysql.insert(table[type], {
 					question,
 					answer,
 					option,
@@ -39,7 +46,7 @@ class AddService extends Service {
 				break;
 			}
 			case 1: {
-				let result = await this.app.mysql.insert(table[type], {
+				result = await this.app.mysql.insert(table[type], {
 					question,
 					answer,
 					analysis,
@@ -48,7 +55,7 @@ class AddService extends Service {
 				break;
 			}
 			case 2 : {
-				let result = await this.app.mysql.insert(table[type], {
+				result = await this.app.mysql.insert(table[type], {
 					question,
 					answer,
 					option,
@@ -60,14 +67,14 @@ class AddService extends Service {
 		}
 
     	if( result ) {
-            return {
-                status: false,
-                msg: '添加失败'
-            }
-        } else {
-            return {
+			return {
                 status: true,
                 msg: '添加成功'
+            }
+        } else {
+			return {
+                status: false,
+                msg: '添加失败'
             }
         } 
 

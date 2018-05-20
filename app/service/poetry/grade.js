@@ -2,6 +2,7 @@ const Service = require('egg').Service;
 
 class GradeService extends Service {
   	async index( body ) {
+		this.ctx.session.libraryId = [[ 1 ], [ 2, 3, 1, 5, 4, 6 ], [ 1 ] ];
 		let {id, answer} = body,
 			table = ['choice_question', 'judge_question', 'admiring_question'],
 			answerId = this.ctx.session.libraryId,
@@ -11,7 +12,7 @@ class GradeService extends Service {
 			count = 0,
 			result = {};
 			console.log(this.ctx.session)
-		let score = 100 / answerId.join().split('|').length;
+		let score = 100 / answerId.join().split(',').length;
 
 		if ( answerId === null ) {
 			return {
@@ -23,13 +24,13 @@ class GradeService extends Service {
 				rightAnswer.push([]);
 				for ( let j = 0; j < answerId[i].length; j++ ) {
 					let currentAnswerId = answerId[i][j];
-					let currentAnswer = answer[i][j];
+					let currentAnswer = parseInt(answer[i][j]);
 					result = await this.app.mysql.select(table[i], {
 						where: {id: currentAnswerId},
 						columns: ['answer']
 					});
-					rightAnswer[i].push(result.answer);
-					if( currentAnswer === result.answer ) {
+					rightAnswer[i].push(result[0].answer);
+					if( currentAnswer === result[0].answer ) {
 						grade += score;
 					}
 				}
@@ -49,12 +50,11 @@ class GradeService extends Service {
 			result = await this.app.mysql.select('grade', {
 				where: {studentId: id},
 				columns: ['count'],
-				order: [['count','desc']],
-				limit: 1
+				orders: [['count','desc']],
+				
 			});
-
 			if ( result.length !== 0 ) {
-				count = result.count + 1;
+				count = result[0].count + 1;
 			} else {
 				count = 1;
 			}

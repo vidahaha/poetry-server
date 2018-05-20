@@ -9,3 +9,8 @@ exports.mysql = {
 	enable: true,
 	package: 'egg-mysql',
 };
+
+exports.oss = {
+	enable: true,
+	package: 'egg-oss',
+};
