@@ -2,7 +2,9 @@ const Service = require('egg').Service;
 
 class GradeService extends Service {
   	async index( body ) {
-		this.ctx.session.libraryId = [[ 1 ], [ 2, 3, 1, 5, 4, 6 ], [ 1 ] ];
+		//test 
+		//this.ctx.session.libraryId = [[ 1 ], [ 2, 3, 1, 5, 4, 6 ], [ 1 ] ];
+
 		let {id, answer} = body,
 			table = ['choice_question', 'judge_question', 'admiring_question'],
 			answerId = this.ctx.session.libraryId,
