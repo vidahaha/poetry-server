@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const Service = require('egg').Service;
+const awaitWriteStream = require('await-stream-ready').write;
+const sendToWormhole = require('stream-wormhole');
 
 class AddService extends Service {
   	async index( body ) {
@@ -15,19 +17,20 @@ class AddService extends Service {
 
 		if ( typeof type !== 'number' ) type = parseInt(type);
 
-		let url = './static/'+path.basename(stream.filename);
-
-		let saveUrl = global.API_HOST + '/static/'+path.basename(stream.filename);
-
 		let time = new Date();
 
-		result = await this.ctx.oss.put(url, stream);
+		let fileName = time.getTime()+'_'+path.basename(stream.filename);
 
-		if ( !result ) {
-			return {
-                status: false,
-                msg: '上传失败'
-            }
+		let url = './app/public/'+ fileName;
+
+		let saveUrl = this.ctx.request.header.host + '/public/'+ fileName;
+
+		const writeStream = fs.createWriteStream(url);
+		try {
+		  await awaitWriteStream(stream.pipe(writeStream));
+		} catch (err) {
+		  await sendToWormhole(stream);
+		  throw err;
 		}
 
 		if (option) {
@@ -41,7 +44,7 @@ class AddService extends Service {
 					answer,
 					option,
 					analysis,
-					image: url
+					image: saveUrl
 				});
 				break;
 			}
@@ -50,7 +53,7 @@ class AddService extends Service {
 					question,
 					answer,
 					analysis,
-					image: url
+					image: saveUrl
 				});
 				break;
 			}
@@ -60,7 +63,7 @@ class AddService extends Service {
 					answer,
 					option,
 					analysis,
-					video: url
+					video: saveUrl
 				});
 				break;
 			}

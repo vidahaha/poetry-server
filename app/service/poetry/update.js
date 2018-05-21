@@ -2,9 +2,13 @@ const Service = require('egg').Service;
 
 class UpdateService extends Service {
   	async index( body ) {
-		let {type, id, question, option, answer, analysis, image} = body,
-            table = ['choice_question', 'judge_question', 'admiring_question'];
-            
+
+        let table = ['choice_question', 'judge_question', 'admiring_question'];
+
+        const stream = await this.ctx.getFileStream();  
+
+        let {type, question, option, answer, analysis} = stream.fields;
+
         if ( option ) option = option.join('|');   
 
         for ( let key in body ) {
@@ -12,7 +16,6 @@ class UpdateService extends Service {
             row[key] = body[key];
         }
 
-        console.log( row )
 
 		let result = await this.ctx.app.mysql.update(table[type], row);
 

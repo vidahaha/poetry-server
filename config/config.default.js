@@ -10,7 +10,7 @@ module.exports = appInfo => {
     csrf: {
       enable: false,
     },
-    domainWhiteList: [ 'http://localhost:8080', 'http://www.vidahaha.top', 'http://192.168.31.255:8080' ],
+    domainWhiteList: [ 'http://localhost:8080' ],
   };
 
   config.cors = {
@@ -27,8 +27,8 @@ module.exports = appInfo => {
       // username
       user: 'root',
       // password
-      //password: '123456',
-      password: 'qq937634115',
+      password: '123456',
+      //password: 'qq937634115',
       // database
       database: 'poetry',
     },

@@ -42,6 +42,7 @@ class LibraryService extends Service {
                     status: false,
                     msg: `题库中${tableName[index]}只有${val}题`
                 }
+                break;
             } else {
                 result = await self.app.mysql.select(table[index]);
                 if (result === null ) {
