@@ -11,13 +11,13 @@ class DeleteService extends Service {
 
     	if( result ) {
             return {
-                status: false,
-                msg: '删除失败'
+                status: true,
+                msg: '删除成功'
             }
         } else {
             return {
-                status: true,
-                msg: '删除成功'
+                status: false,
+                msg: '删除失败'
             }
         } 
 
