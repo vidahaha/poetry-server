@@ -2,7 +2,8 @@ const Service = require('egg').Service;
 
 class UpdateService extends Service {
   	async index( body ) {
-		let row = {};  
+        let row = {};  
+        console.log( body )
 		for ( let key in body ) {
 			row[key] = body[key]
 		}
@@ -10,13 +11,13 @@ class UpdateService extends Service {
 
     	if( result ) {
             return {
-                status: false,
-                msg: '更新失败'
+                status: true,
+                msg: '更新成功'
             }
         } else {
             return {
-                status: true,
-                msg: '更新成功'
+                status: false,
+                msg: '更新失败'
             }
         } 
 

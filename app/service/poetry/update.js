@@ -6,11 +6,11 @@ const path = require('path');
 
 class UpdateService extends Service {
   	async index( body ) {
-
+        console.log( body )
         let table = ['choice_question', 'judge_question', 'admiring_question'];
 
         const stream = await this.ctx.getFileStream(); 
-        
+        console.log( stream )
         let fields = stream.fields;
         let type = fields.type;
         let id = fields.id;
@@ -52,13 +52,13 @@ class UpdateService extends Service {
 
     	if ( result ) {
             return {
-                status: false,
-                msg: '修改失败'
+                status: true,
+                msg: '修改成功'
             }
         } else {
             return {
-                status: true,
-                msg: '修改成功'
+                status: false,
+                msg: '修改失败'
             }
         } 
 

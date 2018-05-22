@@ -10,7 +10,7 @@ module.exports = appInfo => {
     csrf: {
       enable: false,
     },
-    domainWhiteList: [ 'http://localhost:8080', 'http://www.vidahaha.top', 'http://192.168.31.255:8080' ],
+    domainWhiteList: [ 'http://localhost:8080', 'http://www.vidahaha.top', 'http://localhost:8081' ],
   };
 
   config.cors = {
@@ -35,6 +35,12 @@ module.exports = appInfo => {
     app: true,
     // load into agent, default is close
     agent: false,
+  };
+
+  config.cluster = {
+    listen: {
+      port: 7002
+    }
   };
 
   // add your config here

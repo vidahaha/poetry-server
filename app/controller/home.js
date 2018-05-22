@@ -64,7 +64,8 @@ class HomeController extends Controller {
 
     async add() {
         const add = this.ctx.service.home.add;
-        const res = await add.index();
+        const body = this.ctx.request.body;
+        const res = await add.index( body );
 
         this.ctx.body = {
             status: res.status,
@@ -74,7 +75,8 @@ class HomeController extends Controller {
 
     async delete() {
         const deleteIt = this.ctx.service.home.delete;
-        const res = await deleteIt.index();
+        const body = this.ctx.request.body;
+        const res = await deleteIt.index( body );
 
         this.ctx.body = {
             status: res.status,
@@ -84,7 +86,8 @@ class HomeController extends Controller {
 
     async update() {
         const update = this.ctx.service.home.update;
-        const res = await update.index();
+        const body = this.ctx.request.body;        
+        const res = await update.index( body );
 
         this.ctx.body = {
             status: res.status,
