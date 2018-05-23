@@ -85,6 +85,24 @@ class TestController extends Controller {
           });
         this.ctx.body = result;
     }
+
+    async test_19() {
+        let data = {
+            type: 2,   //必选
+            id: 1,     //必选
+            question: '1+1=2?',  // 可选
+            option: 1,  // 可选
+            answer: 1,    // 可选
+            analysis: '简单的数学运算', // 可选
+        }
+        const result = await this.ctx.curl(`${this.root}/Poetry/UpdateN`, {
+            method: 'post',
+            data,
+            dataType: 'json',
+            contentType: 'json',
+          });
+        this.ctx.body = result;
+    }
 }
 
 module.exports = TestController;

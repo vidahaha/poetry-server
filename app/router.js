@@ -23,9 +23,7 @@ module.exports = app => {
   router.post('/Poetry/Update', controller.poetry.update);  
   router.post('/Student/Add', controller.home.add);
   router.post('/Student/Delete', controller.home.delete);    
-  router.post('/Student/Update', controller.home.update);                                                                                                                      
-                                                              
-  
+  router.post('/Student/Update', controller.home.update);  
   
   //test
   router.get('/Test/5', controller.test.test_5);
@@ -33,5 +31,6 @@ module.exports = app => {
   router.get('/Test/12', controller.test.test_12);
   router.get('/Test/13', controller.test.test_13); 
   router.get('/Test/18', controller.test.test_18);        
-  
+  router.get('/Test/19', controller.test.test_19);        
+                                                                                                              
 };

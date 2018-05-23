@@ -60,6 +60,17 @@ class PoetryController extends Controller {
             msg: res.msg,
         }
     }
+
+    async updateN() {
+        const update = this.ctx.service.poetry.updateN;
+        const body = this.ctx.request.body;
+        const res = await update.index(body);
+
+        this.ctx.body = {
+            status: res.status,
+            msg: res.msg,
+        }
+    }
 }
 
 module.exports = PoetryController;
