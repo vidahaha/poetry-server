@@ -2,9 +2,14 @@ const Service = require('egg').Service;
 
 class UpdateNService extends Service {
   	async index( body ) {
-        console.log( body )
+        let type = body.type;
+
+        for ( let key in body ) {
+			if (key!=='type') row[key] = body[key];
+        }
+        
 		let table = ['choice_question', 'judge_question', 'admiring_question'];
-		let result = await this.ctx.app.mysql.update(table[type], body);
+		let result = await this.ctx.app.mysql.update(table[type], row);
 
     	if ( result ) {
             return {

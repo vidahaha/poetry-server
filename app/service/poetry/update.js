@@ -6,7 +6,6 @@ const path = require('path');
 
 class UpdateService extends Service {
   	async index( body ) {
-        console.log( body )
         let table = ['choice_question', 'judge_question', 'admiring_question'];
 
         const stream = await this.ctx.getFileStream(); 
