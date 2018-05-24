@@ -21,9 +21,11 @@ module.exports = app => {
   router.post('/Poetry/Add', controller.poetry.add);
   router.post('/Poetry/Delete', controller.poetry.delete);
   router.post('/Poetry/Update', controller.poetry.update);  
+  router.post('/Poetry/UpdateN', controller.poetry.updateN);   
   router.post('/Student/Add', controller.home.add);
   router.post('/Student/Delete', controller.home.delete);    
-  router.post('/Student/Update', controller.home.update);  
+  router.post('/Student/Update', controller.home.update);
+ 
   
   //test
   router.get('/Test/5', controller.test.test_5);
