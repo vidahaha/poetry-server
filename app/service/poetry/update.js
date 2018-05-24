@@ -9,17 +9,22 @@ class UpdateService extends Service {
         let table = ['choice_question', 'judge_question', 'admiring_question'];
 
         const stream = await this.ctx.getFileStream(); 
-        console.log( stream )
         let fields = stream.fields;
         let type = fields.type;
         let id = fields.id;
+        let row = {};
 
-        let result = await this.ctx.app.mysql.get(table[type], {id});
+        if ( typeof type !== 'number' ) type = parseInt(type);
+
+        let result = await this.app.mysql.get(table[type], {id});
+
         if ( result ) {
-            console.log( result.url );
-            fs.unlinkSync( result.url, res => {
-                console.log( res )
-            } );
+            if ( result.image ) {
+                result.image = (/public\/(.+\..+)/g).exec( result.image )[0];
+                fs.unlinkSync( "./app/" + result.image, res => {
+                    console.log( res )
+                } );
+            }       
         } else {
             return {
                 status: false,
@@ -41,13 +46,14 @@ class UpdateService extends Service {
 		} // 存文件
 
         for ( let key in fields ) {
-            if ( key == 'type' || key == "id" ) continue;
-            if ( key == 'option') fields[key] = fields[key].join('|'); 
+            if ( key == 'type') continue;
+            if ( key == 'option') fields[key] = fields[key].split(',').join('|'); 
             row[key] = fields[key];
         }
-        row.url = saveUrl;
+        
+        type == 2 ? row.video = saveUrl : row.image = saveUrl; 
 
-		result = await this.ctx.app.mysql.update(table[type], row);
+		result = await this.app.mysql.update(table[type], row);
 
     	if ( result ) {
             return {
