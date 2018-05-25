@@ -14,7 +14,7 @@ class AddNService extends Service {
 
 
 		if (option) {
-			option = option.split(',').join('|');
+			option = option.join('|');
 		}
 
         switch (type) {

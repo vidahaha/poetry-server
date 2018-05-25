@@ -39,6 +39,17 @@ class PoetryController extends Controller {
         }
     }
 
+    async addN() {
+        const add = this.ctx.service.poetry.addN;
+        const body = this.ctx.request.body;
+        const res = await add.index( body );
+
+        this.ctx.body = {
+            status: res.status,
+            msg: res.msg,
+        }
+    }
+
     async delete() {
         const deleteIt = this.ctx.service.poetry.delete;
         const body = this.ctx.request.body;
